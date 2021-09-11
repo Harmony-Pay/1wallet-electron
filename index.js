@@ -10,11 +10,11 @@ const config = require('./config.js');
 const menu = require('./menu.js');
 
 unhandled();
-debug();
+//debug();
 contextMenu();
 
 // Note: Must match `build.appId` in package.json
-app.setAppUserModelId('com.company.AppName');
+app.setAppUserModelId('com.open4glabs.harmony1wallet');
 
 // Uncomment this before publishing your first version.
 // It's commented out as it throws an error if there are no published versions.
@@ -34,8 +34,11 @@ const createMainWindow = async () => {
 	const win = new BrowserWindow({
 		title: app.name,
 		show: false,
-		width: 600,
-		height: 400
+		width: 1200,
+		height: 839,
+		webPreferences:{
+			nodeIntergration: true
+		}
 	});
 
 	win.on('ready-to-show', () => {
@@ -48,7 +51,15 @@ const createMainWindow = async () => {
 		mainWindow = undefined;
 	});
 
-	await win.loadFile(path.join(__dirname, 'index.html'));
+	// window menu
+	win.setMenu(null);
+	//await win.loadFile(path.join(__dirname, 'index.html'));
+	//load html into window
+	win.loadURL('https://1wallet.crazy.one/');
+	//garbage collection handle
+	win.on('close', function(){
+		win = null;
+	});
 
 	return win;
 };
@@ -82,9 +93,9 @@ app.on('activate', async () => {
 
 (async () => {
 	await app.whenReady();
-	Menu.setApplicationMenu(menu);
+	//Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
 
-	const favoriteAnimal = config.get('favoriteAnimal');
-	mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);
+	/*const favoriteAnimal = config.get('favoriteAnimal');
+	mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);*/
 })();
