@@ -1,16 +1,16 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu} = require('electron');
-/// const {autoUpdater} = require('electron-updater');
+const {app, BrowserWindow/*	, Menu	*/} = require('electron');
+// Xconst {autoUpdater} = require('electron-updater');
 const {is} = require('electron-util');
 const unhandled = require('electron-unhandled');
-const debug = require('electron-debug');
+// Xconst debug = require('electron-debug');
 const contextMenu = require('electron-context-menu');
-const config = require('./config.js');
-const menu = require('./menu.js');
+// Xconst config = require('./config.js');
+// Xconst menu = require('./menu.js');
 
 unhandled();
-//debug();
+// Xdebug();
 contextMenu();
 
 // Note: Must match `build.appId` in package.json
@@ -18,26 +18,28 @@ app.setAppUserModelId('com.open4glabs.harmony1wallet');
 
 // Uncomment this before publishing your first version.
 // It's commented out as it throws an error if there are no published versions.
-// if (!is.development) {
-// 	const FOUR_HOURS = 1000 * 60 * 60 * 4;
+//	if (!is.development) {
+// 	const CHECKUPDATE_HOURS = 1000 * 60 * 60 * 12;
 // 	setInterval(() => {
 // 		autoUpdater.checkForUpdates();
-// 	}, FOUR_HOURS);
-//
+// 	}, CHECKUPDATE);
 // 	autoUpdater.checkForUpdates();
-// }
+//	}
 
 // Prevent window from being garbage collected
 let mainWindow;
 
 const createMainWindow = async () => {
-	const win = new BrowserWindow({
+	let win = new BrowserWindow({
 		title: app.name,
 		show: false,
 		width: 1200,
 		height: 839,
-		webPreferences:{
-			nodeIntergration: true
+		icon: path.join(app.getAppPath(), 'build/icon.png'),
+		webPreferences: {
+			nodeIntergration: true,
+			worldSafeExecuteJavaScript: true,
+			contextIsolation: true
 		}
 	});
 
@@ -51,13 +53,13 @@ const createMainWindow = async () => {
 		mainWindow = undefined;
 	});
 
-	// window menu
+	// Xwindow menu
 	win.setMenu(null);
-	//await win.loadFile(path.join(__dirname, 'index.html'));
-	//load html into window
+	// Xawait win.loadFile(path.join(__dirname, 'index.html'));
+	// Load html into window
 	win.loadURL('https://1wallet.crazy.one/');
-	//garbage collection handle
-	win.on('close', function(){
+	// Garbage collection handle
+	win.on('close', () => {
 		win = null;
 	});
 
@@ -93,9 +95,6 @@ app.on('activate', async () => {
 
 (async () => {
 	await app.whenReady();
-	//Menu.setApplicationMenu(menu);
+	// Menu.setApplicationMenu(menu);
 	mainWindow = await createMainWindow();
-
-	/*const favoriteAnimal = config.get('favoriteAnimal');
-	mainWindow.webContents.executeJavaScript(`document.querySelector('header p').textContent = 'Your favorite animal is ${favoriteAnimal}'`);*/
 })();
