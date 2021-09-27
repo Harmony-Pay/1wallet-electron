@@ -1,0 +1,9 @@
+version: 0.1.0
+files:
+  - url: Harmony-1Wallet-0.1.0.AppImage
+    sha512: 4Ct8FKqY9d9BL6EVr9N/etEf0hwmneReFUgoOYNGJ2voTc4B6XdUAq31BSi34DmpYd0xZxb0TOl003FJKQtsnw==
+    size: 82399601
+    blockMapSize: 86405
+path: Harmony-1Wallet-0.1.0.AppImage
+sha512: 4Ct8FKqY9d9BL6EVr9N/etEf0hwmneReFUgoOYNGJ2voTc4B6XdUAq31BSi34DmpYd0xZxb0TOl003FJKQtsnw==
+releaseDate: '2021-09-27T06:05:33.434Z'
